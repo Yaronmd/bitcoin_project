@@ -1,0 +1,48 @@
+# Byte-compiled / compiled Python files
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Virtual environment (if created locally)
+.venv/
+env/
+venv/
+
+# Poetry files
+poetry.lock
+
+# Test cache / reports
+.pytest_cache/
+htmlcov/
+.coverage*
+.tox/
+.nox/
+
+# VSCode / PyCharm / JetBrains
+.vscode/
+.idea/
+
+# Logs / temp files
+*.log
+*.tmp
+*.swp
+
+# Jupyter Notebook checkpoint files
+.ipynb_checkpoints/
+
+# Local data (example: fetched results)
+*.sqlite
+*.db
+*.csv
+*.json
+!config/api_config.json         # keep this specific config file
+btc_price_history.json          # but ignore dynamically generated files
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# Build artifacts
+dist/
+build/
+*.egg-info/
