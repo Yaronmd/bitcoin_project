@@ -5,10 +5,11 @@ from helper.logger_helper import logger
 def test_api_data():
     config = ConfigLoader().get_api_config()
     base_url = config["base_url"]
-    headers = config.get("default_headers", {}) 
+    headers = config.get("default_headers", {})
+    get_bitcoin_price_usd = config.get("get_bitcoin_price_usd")
     client = APIClient(base_url=base_url,default_headers=headers)
 
-    response = client.get(endpoint="/v2/prices/BTC-USD/spot")
+    response = client.get(endpoint=get_bitcoin_price_usd)
     assert response.status == 200
 
     data = response.json()
