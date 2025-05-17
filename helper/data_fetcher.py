@@ -1,8 +1,8 @@
 import json
-from datetime import datetime
-import logging
-
-logger = logging.getLogger(__name__)
+from datetime import datetime, timezone
+import os
+import time
+from helper.logger_helper import logger
 
 class DataFetcher:
     def __init__(self, client, endpoint: str, output_file: str):
@@ -14,9 +14,10 @@ class DataFetcher:
         response = self.client.get(self.endpoint)
         if response.status == 200:
             data = response.json()
+            price_data = data["data"]
             record = {
-                "timestamp": datetime.utcnow().isoformat(),
-                "data": data
+                "timestamp": datetime.now(timezone.utc).isoformat(),
+                "price": price_data["amount"]
             }
             self._save_to_file(record)
             logger.info(f"Fetched and saved at {record['timestamp']}")
@@ -25,11 +26,13 @@ class DataFetcher:
 
     def _save_to_file(self, record):
         try:
-            with open(self.output_file, "r") as f:
-                existing = json.load(f)
-        except (FileNotFoundError, json.JSONDecodeError):
-            existing = []
+            os.makedirs(os.path.dirname(self.output_file), exist_ok=True)
 
-        existing.append(record)
-        with open(self.output_file, "w") as f:
-            json.dump(existing, f, indent=2)
+            with open(self.output_file, "a") as f:
+                json.dump(record, f)
+                f.write("\n")
+        except Exception as e:
+            logger.error(f"Faild to write to file, expcetion: {e}")
+    
+
+
