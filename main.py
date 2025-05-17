@@ -47,9 +47,9 @@ def clear_file(path: str):
     logger.info(f"Cleared file content: {path}")
     
     
-def save_plot(output_dir:str):
+def save_plot(output_dir:str,json_path):
     plot_generator = PlotGenerator(output_dir)
-    plot_generator.generate_price_plot()
+    plot_generator.generate_price_plot(json_lines_path=json_path)
 
 if __name__ == "__main__":
     logger.info("Bitcoin automation started")
@@ -65,7 +65,7 @@ if __name__ == "__main__":
 
             # Check if one hour has passed
             if datetime.now(timezone.utc) - last_email_sent >= one_hour:
-                save_plot(output_dir=result_dir)
+                save_plot(output_dir=result_dir,json_path=file_path)
                 send_email(file_path)
                 clear_file(file_path)
                 last_email_sent = datetime.now(timezone.utc)
