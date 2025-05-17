@@ -1,0 +1,10 @@
+{
+  "api": {
+    "base_url": "https://api.coinbase.com",
+    "default_headers": {
+      "Accept": "application/json"
+    },
+    "get_bitcoin_price_usd":"/v2/prices/BTC-USD/spot"
+  }
+  
+}
